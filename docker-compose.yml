@@ -3,7 +3,7 @@ version: '3.2'
 services:
   influxdb:
     build: docker/influxdb
-    env_file: configuration.env
+    env_file: docker/grafana/configuration.env
     ports:
       - '8086:8086'
     volumes:
@@ -12,7 +12,7 @@ services:
       - code-network
   grafana:
     build: docker/grafana
-    env_file: configuration.env
+    env_file: docker/grafana/configuration.env
     links:
       - influxdb
     ports:
@@ -27,7 +27,7 @@ services:
       - "8080:80"
     volumes:
       - ./src:/var/www/html
-      - .docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     networks:
       - code-network
   php:
